@@ -902,6 +902,10 @@
 </code></pre></div></td></tr></table></div>
 <h2 id="available-configurations">Available Configurations<a class="headerlink" href="#available-configurations" title="Permanent link">#</a></h2>
 <p>The following configuration items can be retrieved and modified by <a href="../cli/#config"><code>pdm config</code></a> command.</p>
+<div class="admonition note">
+<p class="admonition-title">Environment Variable Overrides</p>
+<p>If the corresponding env var is set, the value will take precedence over what is saved in the config file.</p>
+</div>
 <table>
 <thead>
 <tr>
@@ -914,25 +918,25 @@
 </thead>
 <tbody>
 <tr>
-<td><code>build_isolation</code></td>
-<td>Isolate the build environment from the project environment</td>
-<td>Yes</td>
-<td>Yes</td>
-<td><code>PDM_BUILD_ISOLATION</code></td>
-</tr>
-<tr>
 <td><code>cache_dir</code></td>
 <td>The root directory of cached files</td>
-<td>The default cache location on OS</td>
+<td><code>/home/runner/.cache/pdm</code></td>
 <td>No</td>
 <td><code>PDM_CACHE_DIR</code></td>
 </tr>
 <tr>
 <td><code>check_update</code></td>
 <td>Check if there is any newer version available</td>
-<td>True</td>
+<td><code>True</code></td>
 <td>No</td>
 <td><code>PDM_CHECK_UPDATE</code></td>
+</tr>
+<tr>
+<td><code>build_isolation</code></td>
+<td>Isolate build environment from the project environment</td>
+<td><code>True</code></td>
+<td>Yes</td>
+<td><code>PDM_BUILD_ISOLATION</code></td>
 </tr>
 <tr>
 <td><code>global_project.fallback</code></td>
@@ -951,7 +955,7 @@
 <tr>
 <td><code>global_project.path</code></td>
 <td>The path to the global project</td>
-<td><code>&lt;default config location on OS&gt;/global-project</code></td>
+<td><code>/home/runner/.config/pdm/global-project</code></td>
 <td>No</td>
 <td></td>
 </tr>
@@ -963,9 +967,44 @@
 <td></td>
 </tr>
 <tr>
+<td><code>strategy.update</code></td>
+<td>The default strategy for updating packages</td>
+<td><code>reuse</code></td>
+<td>Yes</td>
+<td></td>
+</tr>
+<tr>
+<td><code>strategy.save</code></td>
+<td>Specify how to save versions when a package is added</td>
+<td><code>minimum</code></td>
+<td>Yes</td>
+<td></td>
+</tr>
+<tr>
+<td><code>strategy.resolve_max_rounds</code></td>
+<td>Specify the max rounds of resolution process</td>
+<td><code>10000</code></td>
+<td>Yes</td>
+<td><code>PDM_RESOLVE_MAX_ROUNDS</code></td>
+</tr>
+<tr>
+<td><code>strategy.inherit_metadata</code></td>
+<td>Inherit the groups and markers from parents for each package</td>
+<td><code>True</code></td>
+<td>Yes</td>
+<td></td>
+</tr>
+<tr>
+<td><code>install.parallel</code></td>
+<td>Whether to perform installation and uninstallation in parallel</td>
+<td><code>True</code></td>
+<td>Yes</td>
+<td><code>PDM_INSTALL_PARALLEL</code></td>
+</tr>
+<tr>
 <td><code>install.cache</code></td>
-<td>Enable caching of wheel installations</td>
-<td>False</td>
+<td>Cache wheel installation and only put symlinks in the library root</td>
+<td><code>False</code></td>
 <td>Yes</td>
 <td></td>
 </tr>
@@ -977,11 +1016,11 @@
 <td></td>
 </tr>
 <tr>
-<td><code>install.parallel</code></td>
-<td>Whether to perform installation and uninstallation in parallel</td>
-<td><code>True</code></td>
+<td><code>python.providers</code></td>
+<td>List of python provider names for findpython</td>
+<td><code>[]</code></td>
 <td>Yes</td>
-<td><code>PDM_PARALLEL_INSTALL</code></td>
+<td></td>
 </tr>
 <tr>
 <td><code>python.use_pyenv</code></td>
@@ -998,18 +1037,18 @@
 <td><code>PDM_USE_VENV</code></td>
 </tr>
 <tr>
-<td><code>python.providers</code></td>
-<td>List of python provider names for findpython</td>
-<td>All providers supported by findpython</td>
-<td>Yes</td>
-<td></td>
-</tr>
-<tr>
 <td><code>pypi.url</code></td>
-<td>The URL of PyPI mirror</td>
+<td>The URL of PyPI mirror, defaults to https://pypi.org/simple</td>
 <td><code>https://pypi.org/simple</code></td>
 <td>Yes</td>
 <td><code>PDM_PYPI_URL</code></td>
+</tr>
+<tr>
+<td><code>pypi.verify_ssl</code></td>
+<td>Verify SSL certificate when query PyPI</td>
+<td><code>True</code></td>
+<td>Yes</td>
+<td></td>
 </tr>
 <tr>
 <td><code>pypi.username</code></td>
@@ -1026,6 +1065,13 @@
 <td><code>PDM_PYPI_PASSWORD</code></td>
 </tr>
 <tr>
+<td><code>pypi.ca_certs</code></td>
+<td>Path to a CA certificate bundle used for verifying the identity of the PyPI server</td>
+<td></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
 <td><code>pypi.ignore_stored_index</code></td>
 <td>Ignore the configured indexes</td>
 <td><code>False</code></td>
@@ -1033,31 +1079,17 @@
 <td><code>PDM_IGNORE_STORED_INDEX</code></td>
 </tr>
 <tr>
-<td><code>pypi.ca_certs</code></td>
-<td>Path to a PEM-encoded CA cert bundle (used for server cert verification)</td>
-<td>The CA certificates from <a href="https://pypi.org/project/certifi/">certifi</a></td>
-<td>Yes</td>
-<td></td>
-</tr>
-<tr>
 <td><code>pypi.client_cert</code></td>
-<td>Path to a PEM-encoded client cert and optional key</td>
+<td>Path to client certificate file, or combined cert/key file</td>
 <td></td>
 <td>No</td>
 <td></td>
 </tr>
 <tr>
 <td><code>pypi.client_key</code></td>
-<td>Path to a PEM-encoded client cert private key, if not in pypi.client_cert</td>
+<td>Path to client cert keyfile, if not in pypi.client_cert</td>
 <td></td>
 <td>No</td>
-<td></td>
-</tr>
-<tr>
-<td><code>pypi.verify_ssl</code></td>
-<td>Verify SSL certificate when query PyPI</td>
-<td><code>True</code></td>
-<td>Yes</td>
 <td></td>
 </tr>
 <tr>
@@ -1066,6 +1098,83 @@
 <td><code>False</code></td>
 <td>Yes</td>
 <td><code>PDM_PYPI_JSON_API</code></td>
+</tr>
+<tr>
+<td><code>venv.location</code></td>
+<td>Parent directory for virtualenvs</td>
+<td><code>/home/runner/.local/share/pdm/venvs</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>venv.backend</code></td>
+<td>Default backend to create virtualenv</td>
+<td><code>virtualenv</code></td>
+<td>Yes</td>
+<td><code>PDM_VENV_BACKEND</code></td>
+</tr>
+<tr>
+<td><code>venv.in_project</code></td>
+<td>Create virtualenv in <code>.venv</code> under project root</td>
+<td><code>True</code></td>
+<td>Yes</td>
+<td><code>PDM_VENV_IN_PROJECT</code></td>
+</tr>
+<tr>
+<td><code>venv.prompt</code></td>
+<td>Define a custom template to be displayed in the prompt when virtualenv isactive. Variables <code>project_name</code> and <code>python_version</code> are available forformatting</td>
+<td><code>{project_name}-{python_version}</code></td>
+<td>Yes</td>
+<td><code>PDM_VENV_PROMPT</code></td>
+</tr>
+<tr>
+<td><code>venv.with_pip</code></td>
+<td>Install pip when creating a new venv</td>
+<td><code>False</code></td>
+<td>Yes</td>
+<td><code>PDM_VENV_WITH_PIP</code></td>
+</tr>
+<tr>
+<td><code>theme.primary</code></td>
+<td>Theme color for primary</td>
+<td><code>cyan</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>theme.success</code></td>
+<td>Theme color for success</td>
+<td><code>green</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>theme.warning</code></td>
+<td>Theme color for warning</td>
+<td><code>yellow</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>theme.error</code></td>
+<td>Theme color for error</td>
+<td><code>red</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>theme.info</code></td>
+<td>Theme color for info</td>
+<td><code>blue</code></td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td><code>theme.req</code></td>
+<td>Theme color for req</td>
+<td><code>bold green</code></td>
+<td>No</td>
+<td></td>
 </tr>
 <tr>
 <td><code>pypi.&lt;name&gt;.url</code></td>
@@ -1101,69 +1210,6 @@
 <td><code>True</code></td>
 <td>Yes</td>
 <td></td>
-</tr>
-<tr>
-<td><code>strategy.save</code></td>
-<td>Specify how to save versions when a package is added</td>
-<td><code>minimum</code>(can be: <code>exact</code>, <code>wildcard</code>, <code>minimum</code>, <code>compatible</code>)</td>
-<td>Yes</td>
-<td></td>
-</tr>
-<tr>
-<td><code>strategy.update</code></td>
-<td>The default strategy for updating packages</td>
-<td><code>reuse</code>(can be : <code>eager</code>, <code>reuse</code>, <code>all</code>, <code>reuse-installed</code>)</td>
-<td>Yes</td>
-<td></td>
-</tr>
-<tr>
-<td><code>strategy.resolve_max_rounds</code></td>
-<td>Specify the max rounds of resolution process</td>
-<td>10000</td>
-<td>Yes</td>
-<td><code>PDM_RESOLVE_MAX_ROUNDS</code></td>
-</tr>
-<tr>
-<td><code>strategy.inherit_metadata</code></td>
-<td>Inherit the groups and markers from parents for each package</td>
-<td><code>True</code></td>
-<td>Yes</td>
-<td></td>
-</tr>
-<tr>
-<td><code>venv.location</code></td>
-<td>Parent directory for virtualenvs</td>
-<td><code>&lt;default data location on OS&gt;/venvs</code></td>
-<td>No</td>
-<td></td>
-</tr>
-<tr>
-<td><code>venv.backend</code></td>
-<td>Default backend to create virtualenv</td>
-<td><code>virtualenv</code></td>
-<td>Yes</td>
-<td><code>PDM_VENV_BACKEND</code></td>
-</tr>
-<tr>
-<td><code>venv.prompt</code></td>
-<td>Formatted string to be displayed in the prompt when virtualenv is active</td>
-<td><code>{project_name}-{python_version}</code></td>
-<td>Yes</td>
-<td><code>PDM_VENV_PROMPT</code></td>
-</tr>
-<tr>
-<td><code>venv.in_project</code></td>
-<td>Create virtualenv in <code>.venv</code> under project root</td>
-<td><code>True</code></td>
-<td>Yes</td>
-<td><code>PDM_VENV_IN_PROJECT</code></td>
-</tr>
-<tr>
-<td><code>venv.with_pip</code></td>
-<td>Install pip when creating a new venv</td>
-<td><code>False</code></td>
-<td>Yes</td>
-<td><code>PDM_VENV_WITH_PIP</code></td>
 </tr>
 <tr>
 <td><code>repository.&lt;name&gt;.url</code></td>
@@ -1202,7 +1248,6 @@
 </tr>
 </tbody>
 </table>
-<p><em>If the corresponding env var is set, the value will take precedence over what is saved in the config file.</em></p>
 
 
   
