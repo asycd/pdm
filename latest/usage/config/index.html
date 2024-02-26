@@ -1244,6 +1244,7 @@ pdm<span class="w"> </span>config<span class="w"> </span>pypi.private.password<s
 <li><code>symlink</code>(default), create symlinks to the package directories or children if the parent is a namespace package.</li>
 <li><code>symlink_individual</code>, for each individual files in the package directory, create a symlink to it.</li>
 <li><code>hardlink</code>, create hard links to the package files of the cache entry.</li>
+<li><code>pth</code>, do not link the package directory but only add the path to the <code>sys.path</code> via a <code>.pth</code> file(<strong>This may not be supported by IDEs</strong>).</li>
 </ul>
 <p>You can switch between them by running <code>pdm config [-l] install.cache_method &lt;method&gt;</code>.</p>
 <div class="admonition note">
