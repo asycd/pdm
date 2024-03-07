@@ -1099,6 +1099,10 @@
 <p>It will run <code>flask run -p 54321</code> in the environment that is aware of packages in your project environment.</p>
 <h2 id="user-scripts">User Scripts<a class="headerlink" href="#user-scripts" title="Permanent link">#</a></h2>
 <p>PDM also supports custom script shortcuts in the optional <code>[tool.pdm.scripts]</code> section of <code>pyproject.toml</code>.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+</div>
+<p>The <code>[tool.pdm.scripts]</code> directory must not be confused with <code>[project.scripts]</code>. The latter is used to install a command as part of your package, as explained <a href="https://packaging.python.org/en/latest/guides/writing-pyproject-toml/#creating-executable-scripts">here</a>.</p>
 <p>You can then run <code>pdm run &lt;script_name&gt;</code> to invoke the script in the context of your PDM project. For example:</p>
 <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
 <span class="normal">2</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">[tool.pdm.scripts]</span>
