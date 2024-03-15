@@ -1533,6 +1533,7 @@
 <li><code>--no-self</code>: Don't install the project itself. [env var: <code>PDM_NO_SELF</code>]</li>
 <li><code>--fail-fast</code>, <code>-x</code>: Abort on first installation error</li>
 <li><code>--no-isolation</code>: Disable isolation when building a source distribution that follows PEP 517, as in: build dependencies specified by PEP 518 must be already installed if this option is used.</li>
+<li><code>--config-setting</code>, <code>-C</code>: Pass options to the builder. options with a value must be specified after "=": <code>--config-setting=key(=value)</code> or <code>-Ckey(=value)</code></li>
 </ul>
 <h3 id="build">build<a class="headerlink" href="#build" title="Permanent link">#</a></h3>
 <blockquote>
@@ -1546,11 +1547,11 @@
 <li><code>-p</code>, <code>--project</code>: Specify another path as the project root, which changes the base of<code>pyproject.toml</code> and <code>__pypackages__</code> [env var: <code>PDM_PROJECT</code>]</li>
 <li><code>--no-isolation</code>: Disable isolation when building a source distribution that follows PEP 517, as in: build dependencies specified by PEP 518 must be already installed if this option is used.</li>
 <li><code>-k</code>, <code>--skip</code>: Skip some tasks and/or hooks by their comma-separated names. Can be supplied multiple times. Use<code>:all</code> to skip all hooks. Use<code>:pre</code> and<code>:post</code> to skip all pre or post hooks.</li>
+<li><code>--config-setting</code>, <code>-C</code>: Pass options to the builder. options with a value must be specified after "=": <code>--config-setting=key(=value)</code> or <code>-Ckey(=value)</code></li>
 <li><code>--no-sdist</code>: Don't build source tarballs (default: <code>False</code>)</li>
 <li><code>--no-wheel</code>: Don't build wheels (default: <code>False</code>)</li>
 <li><code>-d</code>, <code>--dest</code>: Target directory to put artifacts (default: <code>dist</code>)</li>
 <li><code>--no-clean</code>: Do not clean the target directory (default: <code>False</code>)</li>
-<li><code>--config-setting</code>, <code>-C</code>: Pass options to the backend. options with a value must be specified after "=": <code>--config-setting=--opt(=value)</code> or <code>-C--opt(=value)</code></li>
 </ul>
 <h3 id="cache">cache<a class="headerlink" href="#cache" title="Permanent link">#</a></h3>
 <blockquote>
@@ -1671,7 +1672,7 @@
 <p>Dependencies Selection:</p>
 <ul>
 <li><code>-G</code>, <code>--group</code>, <code>--with</code> <code>GROUP</code>: Select group of optional-dependencies separated by comma or dev-dependencies (with <code>-d</code>). Can be supplied multiple times, use<code>:all</code> to include all groups under the same species.</li>
-<li><code>--without</code>: Exclude groups of optional-dependencies when using<code>:all</code></li>
+<li><code>--without</code>: Exclude groups of optional-dependencies or dev-dependencies</li>
 <li><code>--no-default</code>: Don't include dependencies from the default group (default: <code>False</code>)</li>
 <li><code>-d</code>, <code>--dev</code>: Select dev dependencies</li>
 <li><code>--prod</code>, <code>--production</code>: Unselect dev dependencies (default: <code>True</code>)</li>
@@ -1783,11 +1784,12 @@
 <li><code>--no-self</code>: Don't install the project itself. [env var: <code>PDM_NO_SELF</code>]</li>
 <li><code>--fail-fast</code>, <code>-x</code>: Abort on first installation error</li>
 <li><code>--no-isolation</code>: Disable isolation when building a source distribution that follows PEP 517, as in: build dependencies specified by PEP 518 must be already installed if this option is used.</li>
+<li><code>--config-setting</code>, <code>-C</code>: Pass options to the builder. options with a value must be specified after "=": <code>--config-setting=key(=value)</code> or <code>-Ckey(=value)</code></li>
 </ul>
 <p>Dependencies Selection:</p>
 <ul>
 <li><code>-G</code>, <code>--group</code>, <code>--with</code> <code>GROUP</code>: Select group of optional-dependencies separated by comma or dev-dependencies (with <code>-d</code>). Can be supplied multiple times, use<code>:all</code> to include all groups under the same species.</li>
-<li><code>--without</code>: Exclude groups of optional-dependencies when using<code>:all</code></li>
+<li><code>--without</code>: Exclude groups of optional-dependencies or dev-dependencies</li>
 <li><code>--no-default</code>: Don't include dependencies from the default group (default: <code>False</code>)</li>
 <li><code>-d</code>, <code>--dev</code>: Select dev dependencies</li>
 <li><code>--prod</code>, <code>--production</code>: Unselect dev dependencies (default: <code>True</code>)</li>
@@ -1833,6 +1835,7 @@
 <li><code>-p</code>, <code>--project</code>: Specify another path as the project root, which changes the base of<code>pyproject.toml</code> and <code>__pypackages__</code> [env var: <code>PDM_PROJECT</code>]</li>
 <li><code>-L</code>, <code>--lockfile</code>: Specify another lockfile path. Default:<code>pdm.lock</code>. [env var: <code>PDM_LOCKFILE</code>]</li>
 <li><code>--no-isolation</code>: Disable isolation when building a source distribution that follows PEP 517, as in: build dependencies specified by PEP 518 must be already installed if this option is used.</li>
+<li><code>--config-setting</code>, <code>-C</code>: Pass options to the builder. options with a value must be specified after "=": <code>--config-setting=key(=value)</code> or <code>-Ckey(=value)</code></li>
 <li><code>-k</code>, <code>--skip</code>: Skip some tasks and/or hooks by their comma-separated names. Can be supplied multiple times. Use<code>:all</code> to skip all hooks. Use<code>:pre</code> and<code>:post</code> to skip all pre or post hooks.</li>
 <li><code>--refresh</code>: Don't update pinned versions, only refresh the lock file</li>
 <li><code>--check</code>: Check if the lock file is up to date and quit</li>
@@ -1849,7 +1852,7 @@
 <p>Dependencies Selection:</p>
 <ul>
 <li><code>-G</code>, <code>--group</code>, <code>--with</code> <code>GROUP</code>: Select group of optional-dependencies separated by comma or dev-dependencies (with <code>-d</code>). Can be supplied multiple times, use<code>:all</code> to include all groups under the same species.</li>
-<li><code>--without</code>: Exclude groups of optional-dependencies when using<code>:all</code></li>
+<li><code>--without</code>: Exclude groups of optional-dependencies or dev-dependencies</li>
 <li><code>--no-default</code>: Don't include dependencies from the default group (default: <code>False</code>)</li>
 <li><code>-d</code>, <code>--dev</code>: Select dev dependencies</li>
 <li><code>--prod</code>, <code>--production</code>: Unselect dev dependencies (default: <code>True</code>)</li>
@@ -1906,6 +1909,7 @@
 <li><code>--no-self</code>: Don't install the project itself. [env var: <code>PDM_NO_SELF</code>]</li>
 <li><code>--fail-fast</code>, <code>-x</code>: Abort on first installation error</li>
 <li><code>--no-isolation</code>: Disable isolation when building a source distribution that follows PEP 517, as in: build dependencies specified by PEP 518 must be already installed if this option is used.</li>
+<li><code>--config-setting</code>, <code>-C</code>: Pass options to the builder. options with a value must be specified after "=": <code>--config-setting=key(=value)</code> or <code>-Ckey(=value)</code></li>
 </ul>
 <h3 id="run">run<a class="headerlink" href="#run" title="Permanent link">#</a></h3>
 <blockquote>
@@ -2123,11 +2127,12 @@
 <li><code>--no-self</code>: Don't install the project itself. [env var: <code>PDM_NO_SELF</code>]</li>
 <li><code>--fail-fast</code>, <code>-x</code>: Abort on first installation error</li>
 <li><code>--no-isolation</code>: Disable isolation when building a source distribution that follows PEP 517, as in: build dependencies specified by PEP 518 must be already installed if this option is used.</li>
+<li><code>--config-setting</code>, <code>-C</code>: Pass options to the builder. options with a value must be specified after "=": <code>--config-setting=key(=value)</code> or <code>-Ckey(=value)</code></li>
 </ul>
 <p>Dependencies Selection:</p>
 <ul>
 <li><code>-G</code>, <code>--group</code>, <code>--with</code> <code>GROUP</code>: Select group of optional-dependencies separated by comma or dev-dependencies (with <code>-d</code>). Can be supplied multiple times, use<code>:all</code> to include all groups under the same species.</li>
-<li><code>--without</code>: Exclude groups of optional-dependencies when using<code>:all</code></li>
+<li><code>--without</code>: Exclude groups of optional-dependencies or dev-dependencies</li>
 <li><code>--no-default</code>: Don't include dependencies from the default group (default: <code>False</code>)</li>
 <li><code>-d</code>, <code>--dev</code>: Select dev dependencies</li>
 <li><code>--prod</code>, <code>--production</code>: Unselect dev dependencies (default: <code>True</code>)</li>
@@ -2172,11 +2177,12 @@
 <li><code>--no-self</code>: Don't install the project itself. [env var: <code>PDM_NO_SELF</code>]</li>
 <li><code>--fail-fast</code>, <code>-x</code>: Abort on first installation error</li>
 <li><code>--no-isolation</code>: Disable isolation when building a source distribution that follows PEP 517, as in: build dependencies specified by PEP 518 must be already installed if this option is used.</li>
+<li><code>--config-setting</code>, <code>-C</code>: Pass options to the builder. options with a value must be specified after "=": <code>--config-setting=key(=value)</code> or <code>-Ckey(=value)</code></li>
 </ul>
 <p>Dependencies Selection:</p>
 <ul>
 <li><code>-G</code>, <code>--group</code>, <code>--with</code> <code>GROUP</code>: Select group of optional-dependencies separated by comma or dev-dependencies (with <code>-d</code>). Can be supplied multiple times, use<code>:all</code> to include all groups under the same species.</li>
-<li><code>--without</code>: Exclude groups of optional-dependencies when using<code>:all</code></li>
+<li><code>--without</code>: Exclude groups of optional-dependencies or dev-dependencies</li>
 <li><code>--no-default</code>: Don't include dependencies from the default group (default: <code>False</code>)</li>
 <li><code>-d</code>, <code>--dev</code>: Select dev dependencies</li>
 <li><code>--prod</code>, <code>--production</code>: Unselect dev dependencies</li>

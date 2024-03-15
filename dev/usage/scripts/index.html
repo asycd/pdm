@@ -546,6 +546,13 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#working_dir" class="md-nav__link">
+    working_dir
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#site_packages" class="md-nav__link">
     site_packages
   </a>
@@ -1013,6 +1020,13 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#working_dir" class="md-nav__link">
+    working_dir
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#site_packages" class="md-nav__link">
     site_packages
   </a>
@@ -1178,6 +1192,9 @@ This is basically run via <code>subprocess.Popen()</code> with <code>shell=True<
 <span class="n">all</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="n">composite</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s">&quot;lint&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;test&quot;</span><span class="p">]}</span>
 </code></pre></div></td></tr></table></div>
 <p>Running <code>pdm run all</code> will run <code>lint</code> first and then <code>test</code> if <code>lint</code> succeeded.</p>
+<div class="admonition tip">
+<p class="admonition-title">Added in version 2.13.0</p>
+</div>
 <p>To override the default behavior and continue the execution of the remaining
 scripts after a failure, set the <code>keep_going</code> option to <code>true</code>:</p>
 <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
@@ -1245,6 +1262,18 @@ If you want the dotenv file to override existing environment variables use the f
 <p class="admonition-title">Note</p>
 <p>A dotenv file specified on a composite task level will override those defined by called tasks.</p>
 </div>
+<h3 id="working_dir"><code>working_dir</code><a class="headerlink" href="#working_dir" title="Permanent link">#</a></h3>
+<div class="admonition tip">
+<p class="admonition-title">Added in version 2.13.0</p>
+</div>
+<p>You can set the current working directory for the script:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">[tool.pdm.scripts]</span>
+<span class="n">start</span><span class="p">.</span><span class="n">cmd</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;flask run -p 54321&quot;</span>
+<span class="n">start</span><span class="p">.</span><span class="n">working_dir</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;subdir&quot;</span>
+</code></pre></div></td></tr></table></div>
+<p>Relative paths are resolved against the project root.</p>
 <h3 id="site_packages"><code>site_packages</code><a class="headerlink" href="#site_packages" title="Permanent link">#</a></h3>
 <p>To make sure the running environment is properly isolated from the outer Python interpreter,
 site-packages from the selected interpreter WON'T be loaded into <code>sys.path</code>, unless any of the following conditions holds:</p>
